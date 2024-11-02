@@ -43,3 +43,4 @@ out/
 /src/main/resources/application.properties
 /src/main/resources/application.yml
 /src/main/resources/secret.properties
+/src/main/resources/secret.yml
