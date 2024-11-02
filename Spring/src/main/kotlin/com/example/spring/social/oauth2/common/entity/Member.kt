@@ -7,7 +7,7 @@ import jakarta.persistence.Table
 import java.util.UUID
 
 @Entity
-@Table(name = "users")
+@Table(name = "member")
 class Member(
 
     @Column(name = "users_uuid", columnDefinition = "BINARY(16)", unique = true)
