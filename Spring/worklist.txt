@@ -1,13 +1,15 @@
 Done
 application.yml 작성 (소프트웨어 백본 관련 : JDBC 설정 등)
 secret.yml 작성 (민감 정보 저장 : Jwt Secret, Naver kakao developer 정보 등)
-----------------------------------------------------
-Before processing
+
 User Entity 관련 로직 생성
     - Entity
     - Repository
     - Service
     - Controller
+----------------------------------------------------
+Before processing
+
 
 Refresh 토큰 관련 로직 생성(Entity, Repository, Service, Controller)
     - Entity
