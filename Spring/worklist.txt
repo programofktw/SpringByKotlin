@@ -7,14 +7,13 @@ User Entity 관련 로직 생성
     - Repository
     - Service
     - Controller
-----------------------------------------------------
-Before processing
 
 
 Refresh 토큰 관련 로직 생성(Entity, Repository, Service, Controller)
     - Entity
     - Repsitory
-
+----------------------------------------------------
+Before processing
 UserInfo 관련 로직 생성(UserInfo 클래스)
     - User Info Interface
     - kakao User Info
