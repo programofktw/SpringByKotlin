@@ -14,8 +14,6 @@ Before processing
 Refresh 토큰 관련 로직 생성(Entity, Repository, Service, Controller)
     - Entity
     - Repsitory
-    - Service
-    - Controller(Access Token 재발급)
 
 UserInfo 관련 로직 생성(UserInfo 클래스)
     - User Info Interface
