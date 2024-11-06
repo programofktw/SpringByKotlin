@@ -1,7 +1,9 @@
 package com.example.spring.domain.user.dto
 
-class UserInfoDto(
-    var name : String,
-    var provider : String
-) {
+interface UserInfoDto{
+    fun getProviderId() : String;
+
+    fun getProvider() : String;
+
+    fun getName() : String;
 }
