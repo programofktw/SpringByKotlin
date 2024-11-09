@@ -2,6 +2,7 @@ package com.example.spring.domain.token.refreshtoken.entity
 
 import com.example.spring.domain.base.BaseEntity
 import jakarta.persistence.*
+import java.util.*
 
 
 @Entity
@@ -12,7 +13,7 @@ class RefreshToken(
     var id : Long?=null,
 
     @Column(name = "providerId", unique = true)
-    var providerId : String,
+    var userId : UUID,
 
     @Column(name = "token", nullable = false)
     var token : String

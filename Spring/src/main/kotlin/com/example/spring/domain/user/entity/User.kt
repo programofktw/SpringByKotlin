@@ -10,7 +10,7 @@ import java.util.*
 @Table(name = "users")
 class User (
     @Column(columnDefinition = "BINARY(16)", unique = true)
-    var uuid : UUID,
+    var userId : UUID,
 
     @Column
     var name : String,
