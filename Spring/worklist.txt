@@ -12,8 +12,7 @@ User Entity 관련 로직 생성
 Refresh 토큰 관련 로직 생성(Entity, Repository, Service, Controller)
     - Entity
     - Repsitory
-----------------------------------------------------
-Before processing
+
 UserInfo 관련 로직 생성(UserInfo 클래스)
     - User Info Interface
     - kakao User Info
@@ -35,6 +34,10 @@ Exception class 생성
         - 유효하지 않은 RefreshToken
     - UserException
     - UserErrorResult
+
+----------------------------------------------------
+Before processing
+
 
 
 Spring Security cofig 작성
