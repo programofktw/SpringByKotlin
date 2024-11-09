@@ -1,5 +1,6 @@
 package com.example.spring.domain.user.service
 
+
 import com.example.spring.domain.user.dto.UserInfoDto
 import com.example.spring.domain.user.entity.User
 import com.example.spring.domain.user.repository.UserRepository
@@ -16,7 +17,7 @@ class UserServiceImpl() : UserService {
 
         var user : User = userRepository.findByProviderId(providerId)
 
-        var userInfoDto : UserInfoDto = UserInfoDto(name = user.name, provider = user.provider)
+        var userInfoDto : UserInfoDto = UserInfoDto(name = user.name, providerId = user.providerId, provider = user.provider)
 
         return userInfoDto
     }

@@ -3,7 +3,7 @@ package com.example.spring.domain.user.dto
 
 class KakaoUserInfo(
     private var attributes: Map<String, Any>
-) : UserInfoDto {
+) : OAuth2UserInfoDto {
 
 
     override fun getProviderId(): String {
