@@ -1,6 +1,5 @@
 package com.example.spring.domain.user.controller
 
-import com.example.spring.domain.user.dto.UserInfoDto
 import com.example.spring.domain.user.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
