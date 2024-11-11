@@ -12,7 +12,7 @@ class RefreshToken(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id : Long?=null,
 
-    @Column(name = "providerId", unique = true)
+    @Column(name = "userId", unique = true)
     var userId : UUID,
 
     @Column(name = "token", nullable = false)

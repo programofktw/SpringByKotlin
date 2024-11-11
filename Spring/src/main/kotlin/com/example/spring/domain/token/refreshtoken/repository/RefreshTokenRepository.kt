@@ -9,7 +9,7 @@ import java.util.UUID
 
 @Repository
 interface RefreshTokenRepository : CrudRepository<RefreshToken,Long>{
-    fun findByProviderId(providerId : String) : RefreshToken
+    fun findByUserId(userId : UUID) : RefreshToken
 
     @Transactional
     @Modifying
