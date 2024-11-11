@@ -5,12 +5,13 @@ import jakarta.transaction.Transactional
 import org.springframework.data.jdbc.repository.query.Modifying
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import java.util.UUID
 
 @Repository
 interface RefreshTokenRepository : CrudRepository<RefreshToken,Long>{
-    fun findByProviderId(providerId : String) : RefreshToken
+    fun findByUserId(userId : UUID) : RefreshToken
 
     @Transactional
     @Modifying
-    fun deleteByProviderId(providerId : String)
+    fun deleteByUserId(uuid : UUID)
 }

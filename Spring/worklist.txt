@@ -35,11 +35,6 @@ Exception class 생성
     - UserException
     - UserErrorResult
 
-----------------------------------------------------
-Before processing
-
-
-
 Spring Security cofig 작성
     - 소셜 로그인 성공 Handler 작성
     - 소셜 로그인 실패 Handler 작성
@@ -48,3 +43,9 @@ Spring Security cofig 작성
 Access Token 재발급 로직 생성
     - TokenService
     - TokenController
+----------------------------------------------------
+Before processing
+
+Spring Security Filter 작성
+    - OAuth2 Filter 전 토큰 검증 Filter
+    - OAuth2 Filter 후 Jwt Token 검증 Filter

@@ -20,4 +20,12 @@ class UserController {
         result.put("userInfo", userService.findUserInfo(authorizationHeader))
         return result
     }
+
+    @GetMapping("/test")
+    fun getTest(): Map<String, Any>{
+        var result : MutableMap<String, Any> = mutableMapOf()
+        result.put("uses", "1234")
+
+        return result
+    }
 }
