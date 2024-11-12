@@ -2,6 +2,7 @@ package com.example.spring.security.jwt
 
 import com.example.spring.domain.token.error.enums.TokenErrorResult
 import com.example.spring.domain.token.error.exception.TokenException
+import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Component
+import java.security.SignatureException
 import java.util.*
 import javax.crypto.SecretKey
 
@@ -29,7 +31,7 @@ class JwtUtil {
 
     // 액세스 토큰을 발급하는 메서드
     fun generateAccessToken(uuid: UUID, expirationMillis: Long): String {
-        log.info("액세스 토큰이 발행되었습니다.")
+        log.info("액세스 토큰 발행.")
         return Jwts.builder()
             .claim("userId", uuid.toString()) // 클레임에 userId 추가
             .setIssuedAt(Date())
@@ -40,7 +42,7 @@ class JwtUtil {
 
     // 리프레쉬 토큰을 발급하는 메서드
     fun generateRefreshToken(uuid : UUID, expirationMillis: Long): String {
-        log.info("리프레쉬 토큰이 발행되었습니다.")
+        log.info("리프레쉬 토큰 발행.")
         return Jwts.builder()
             .claim("userId", uuid.toString()) // 클레임에 userId 추가
             .setIssuedAt(Date())
@@ -63,7 +65,7 @@ class JwtUtil {
                 .parseClaimsJws(token)
                 .body
                 .get("userId", String::class.java)
-            log.info("유저 id를 반환합니다.")
+            log.info("유저 id 반환")
             userId
         } catch (e: JwtException) {
             // 토큰이 유효하지 않은 경우
@@ -73,5 +75,34 @@ class JwtUtil {
             log.warn("유효하지 않은 토큰입니다.")
             throw TokenException(TokenErrorResult.INVALID_TOKEN)
         }
+    }
+
+    //Token 에서 claim 반환하는 메서드
+    fun getClaimsFromToken(token : String?) : Claims{
+        try{
+
+            return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .body
+        }catch(e : SignatureException){
+            log.warn("유효하지 않은 토큰입니다.{}",e.message)
+            throw TokenException(TokenErrorResult.INVALID_TOKEN)
+        }catch (e : Exception){
+            log.warn("유효하지 않은 토큰입니다.")
+            throw TokenException(TokenErrorResult.INVALID_TOKEN)
+        }
+    }
+
+    //토큰이 유효한지 확인
+    fun validateToken(token : String){
+        getClaimsFromToken(token);
+    }
+
+    //토큰 속 유저와 실제 기대하는 user의 비교 검증
+    //ex : 글 수정 요청이 들어왔을때 실제 글쓴이와, 요구하는 Token 속 유저의 정보 비교
+    fun validateUserFromToken(token :String, expectedUserId : UUID){
+        validateToken(token);
     }
 }
