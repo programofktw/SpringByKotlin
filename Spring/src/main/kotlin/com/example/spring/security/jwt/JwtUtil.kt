@@ -7,6 +7,7 @@ import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
+import jakarta.security.auth.message.AuthException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -104,5 +105,9 @@ class JwtUtil {
     //ex : 글 수정 요청이 들어왔을때 실제 글쓴이와, 요구하는 Token 속 유저의 정보 비교
     fun validateUserFromToken(token :String, expectedUserId : UUID){
         validateToken(token);
+
+        if(!getUserIdFromToken(token).equals(expectedUserId.toString())){
+            throw AuthException()
+        }
     }
 }
