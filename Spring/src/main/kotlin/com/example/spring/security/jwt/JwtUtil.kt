@@ -2,6 +2,8 @@ package com.example.spring.security.jwt
 
 import com.example.spring.domain.token.error.enums.TokenErrorResult
 import com.example.spring.domain.token.error.exception.TokenException
+import com.example.spring.domain.user.error.exception.UserErrorResult
+import com.example.spring.domain.user.error.exception.UserException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
@@ -105,9 +107,12 @@ class JwtUtil {
     //ex : 글 수정 요청이 들어왔을때 실제 글쓴이와, 요구하는 Token 속 유저의 정보 비교
     fun validateUserFromToken(token :String, expectedUserId : UUID){
         validateToken(token);
-
         if(!getUserIdFromToken(token).equals(expectedUserId.toString())){
-            throw AuthException()
+            throw UserException(UserErrorResult._NOT_AUTHORITY_USER)
         }
+    }
+
+    fun isExpired(token : String) : Boolean{
+        return getClaimsFromToken(token).expiration.before(Date())
     }
 }

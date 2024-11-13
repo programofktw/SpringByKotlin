@@ -10,8 +10,9 @@ enum class UserErrorResult(
     val message : String
 ) : BaseErrorCode {
 
-    _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "404", "존재하지 않는 유저입니다.");
+    _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "404", "존재하지 않는 유저입니다."),
 
+    _NOT_AUTHORITY_USER(HttpStatus.UNAUTHORIZED,"401","유저의 권한이 잘못되었습니다.");
 
 
 
