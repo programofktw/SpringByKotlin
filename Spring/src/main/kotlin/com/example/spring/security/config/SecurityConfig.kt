@@ -1,12 +1,18 @@
-package com.example.spring.security
+package com.example.spring.security.config
 
+import com.example.spring.security.jwt.ExceptionHandlerFilter
+import com.example.spring.security.jwt.JwtBeforeFilter
+import com.example.spring.security.jwt.JwtUtil
 import com.example.spring.security.oauth2.OAuthLoginFailureHandler
 import com.example.spring.security.oauth2.OAuthLoginSuccessHandler
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.Customizer
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer
@@ -14,6 +20,7 @@ import org.springframework.security.config.annotation.web.configurers.SessionMan
 import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import java.util.*
@@ -23,12 +30,21 @@ import java.util.*
 @EnableWebSecurity
 class SecurityConfig(
     private val  oAuthLoginSuccessHandler : OAuthLoginSuccessHandler,
-    private val oAuthLoginFailureHandler : OAuthLoginFailureHandler
-
+    private val oAuthLoginFailureHandler : OAuthLoginFailureHandler,
+    private val jwtUtil : JwtUtil
+//    private val jwtBeforeFilter: JwtBeforeFilter
 ) {
 
+    @Bean
+    fun configure(): WebSecurityCustomizer? {
+        return WebSecurityCustomizer { web: WebSecurity ->
+            //로그인이 아예 안되어 있어도 괜찮아야할 부분.
+            web.ignoring().requestMatchers("/index.html")
+        }
+    }
+
     // CORS 설정
-    fun corsConfigurationSource(): CorsConfigurationSource {
+    fun corsConfigurationSource() : CorsConfigurationSource {
         return CorsConfigurationSource { request ->
             val config = CorsConfiguration()
             config.allowedHeaders = Collections.singletonList("*")
@@ -54,8 +70,8 @@ class SecurityConfig(
             .authorizeHttpRequests(
                 Customizer { authorize ->
                     authorize
-                        .requestMatchers("/index.html").permitAll()
-                        .anyRequest().authenticated()       //로그인 이후엔 모두 허용
+                        .requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated()//로그인 이후엔 모두 허용
                 }
             )
             .oauth2Login { oauth: OAuth2LoginConfigurer<HttpSecurity?> ->  // OAuth2 로그인 기능에 대한 여러 설정의 진입점
@@ -70,6 +86,10 @@ class SecurityConfig(
                 }
             }
 
+    //        httpSecurity
+    //            .addFilterBefore(JwtBeforeFilter(jwtUtil), UsernamePasswordAuthenticationFilter::class.java)
+    //            .addFilterBefore(ExceptionHandlerFilter(), JwtBeforeFilter::class.java)
         return httpSecurity.build()
+
     }
 }

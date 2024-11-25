@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Component
+import org.springframework.util.StringUtils
 import java.security.SignatureException
 import java.util.*
 import javax.crypto.SecretKey
@@ -56,7 +57,10 @@ class JwtUtil {
 
     // 응답 헤더에서 액세스 토큰을 반환하는 메서드
     fun getTokenFromHeader(authorizationHeader: String): String {
-        return authorizationHeader.substring(7)
+        if(StringUtils.hasText(authorizationHeader))
+            return authorizationHeader.substring(0)
+        else
+            throw TokenException(TokenErrorResult.INVALID_TOKEN)
     }
 
     // 토큰에서 유저 id를 반환하는 메서드

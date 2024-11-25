@@ -12,7 +12,9 @@ enum class UserErrorResult(
 
     _NOT_FOUND_USER(HttpStatus.NOT_FOUND, "404", "존재하지 않는 유저입니다."),
 
-    _NOT_AUTHORITY_USER(HttpStatus.UNAUTHORIZED,"401","유저의 권한이 잘못되었습니다.");
+    _NOT_AUTHORITY_USER(HttpStatus.UNAUTHORIZED,"401","유저에게 권한이 없습니다.");
+
+
 
 
 
