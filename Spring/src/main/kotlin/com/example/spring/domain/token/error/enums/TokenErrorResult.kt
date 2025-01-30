@@ -11,7 +11,8 @@ enum class TokenErrorResult(
     val message : String
 ):BaseErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "401", "유효하지 않은 토큰입니다."),
-    INVALID_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "401", "유효하지 않은 액세스 토큰입니다."),
+    INVALID_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED, "401", "액세스 토큰이 존재하지 않습니다."),
+    Expired_ACCESS_TOKEN(HttpStatus.UNAUTHORIZED,"401","액세스토큰이 만료되었습니다."),
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "401", "유효하지 않은 리프레쉬 토큰입니다.");
 
     override fun getReason(): ErrorReasonDto {
