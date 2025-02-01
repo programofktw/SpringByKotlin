@@ -1,11 +1,9 @@
 package com.example.spring.security.config
 
-import com.example.spring.security.jwt.ExceptionHandlerFilter
-import com.example.spring.security.jwt.JwtBeforeFilter
+
 import com.example.spring.security.jwt.JwtUtil
 import com.example.spring.security.oauth2.OAuthLoginFailureHandler
 import com.example.spring.security.oauth2.OAuthLoginSuccessHandler
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.Customizer
@@ -20,7 +18,6 @@ import org.springframework.security.config.annotation.web.configurers.SessionMan
 import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import java.util.*
@@ -31,7 +28,7 @@ import java.util.*
 class SecurityConfig(
     private val  oAuthLoginSuccessHandler : OAuthLoginSuccessHandler,
     private val oAuthLoginFailureHandler : OAuthLoginFailureHandler,
-    private val jwtUtil : JwtUtil
+//    private val jwtUtil : JwtUtil
 //    private val jwtBeforeFilter: JwtBeforeFilter
 ) {
 
@@ -39,7 +36,7 @@ class SecurityConfig(
     fun configure(): WebSecurityCustomizer? {
         return WebSecurityCustomizer { web: WebSecurity ->
             //로그인이 아예 안되어 있어도 괜찮아야할 부분.
-            web.ignoring().requestMatchers("/index.html")
+            web.ignoring().requestMatchers("/index.html","/api/token/**")
         }
     }
 

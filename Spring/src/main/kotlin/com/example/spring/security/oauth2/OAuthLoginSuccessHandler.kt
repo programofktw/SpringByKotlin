@@ -73,7 +73,7 @@ class OAuthLoginSuccessHandler(
             "naver" -> {
                 log.info("네이버 로그인 요청")
                 oAuth2UserInfo =
-                    NaverUserInfo(token.getPrincipal().getAttributes().get("response") as Map<String?, Any?>)
+                    NaverUserInfo(token.getPrincipal().getAttributes().get("response") as Map<String, Any>)
             }
         }
 

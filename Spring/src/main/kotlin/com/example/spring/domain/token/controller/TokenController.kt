@@ -36,9 +36,12 @@ class TokenController(
         return result
     }
     @GetMapping("/generate")
-    fun generateAccessToken(httpServletResponse: HttpServletResponse,@CookieValue(name = "RefreshToken") refreshToken : String): ResponseEntity<Map<String, Any>> {
+    fun generateAccessToken(httpServletResponse: HttpServletResponse,@CookieValue(name = "RefreshToken") refreshToken : String?): ResponseEntity<Map<String, Any>> {
         var tokens : Tokens
         log.info("AccessToken 갱신 시도")
+        if(refreshToken==null){
+            throw TokenException(TokenErrorResult.INVALID_REFRESH_TOKEN)
+        }
         try{
            tokens = tokenService.ReissueAccessTokenByRefreshToken(refreshToken)
         }catch (e : Exception){

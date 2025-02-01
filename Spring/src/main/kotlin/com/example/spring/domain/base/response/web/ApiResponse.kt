@@ -22,6 +22,7 @@ class ApiResponse<T>(
             return ResponseEntity.status(code.getReasonHttpStatus().httpStatus!!).body(response)
         }
 
+
         fun <T> onFailure(code: BaseErrorCode): ResponseEntity<ApiResponse<T?>> {
             val response: ApiResponse<T?> =
                 ApiResponse<T?>(false, code.getReasonHttpStatus()!!.code, code.getReasonHttpStatus()!!.message, null)

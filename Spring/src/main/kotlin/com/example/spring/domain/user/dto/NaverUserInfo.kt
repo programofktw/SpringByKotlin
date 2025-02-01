@@ -1,7 +1,7 @@
 package com.example.spring.domain.user.dto
 
 class NaverUserInfo(
-    var attributes: Map<String?, Any?>
+    var attributes: Map<String, Any>
 ) : OAuth2UserInfoDto {
     override fun getProviderId(): String {
         return attributes["id"].toString()
