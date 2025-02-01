@@ -2,17 +2,19 @@ package com.example.spring.security.jwt
 
 import com.example.spring.domain.token.error.enums.TokenErrorResult
 import com.example.spring.domain.token.error.exception.TokenException
+import com.example.spring.domain.user.error.exception.UserErrorResult
+import com.example.spring.domain.user.error.exception.UserException
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
-import jakarta.security.auth.message.AuthException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Component
+import org.springframework.util.StringUtils
 import java.security.SignatureException
 import java.util.*
 import javax.crypto.SecretKey
@@ -54,7 +56,10 @@ class JwtUtil {
 
     // 응답 헤더에서 액세스 토큰을 반환하는 메서드
     fun getTokenFromHeader(authorizationHeader: String): String {
-        return authorizationHeader.substring(7)
+        if(StringUtils.hasText(authorizationHeader))
+            return authorizationHeader.substring(0)
+        else
+            throw TokenException(TokenErrorResult.INVALID_TOKEN)
     }
 
     // 토큰에서 유저 id를 반환하는 메서드
@@ -105,9 +110,12 @@ class JwtUtil {
     //ex : 글 수정 요청이 들어왔을때 실제 글쓴이와, 요구하는 Token 속 유저의 정보 비교
     fun validateUserFromToken(token :String, expectedUserId : UUID){
         validateToken(token);
-
         if(!getUserIdFromToken(token).equals(expectedUserId.toString())){
-            throw AuthException()
+            throw UserException(UserErrorResult._NOT_AUTHORITY_USER)
         }
+    }
+
+    fun isExpired(token : String) : Boolean{
+        return getClaimsFromToken(token).expiration.before(Date())
     }
 }

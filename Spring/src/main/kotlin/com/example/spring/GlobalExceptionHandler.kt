@@ -16,7 +16,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(TokenException::class)
     fun handleTokenException(e: TokenException): ResponseEntity<ApiResponse<BaseErrorCode?>> {
         val errorResult = e.tokenErrorResult
-        return ApiResponse.onFailure(errorResult!!)
+        return ApiResponse.onFailure(errorResult)
     }
 
     @ExceptionHandler(UserException::class)
