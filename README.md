@@ -1,5 +1,8 @@
 # SpringByKotlin
 <hr>
+시작 전 작용 사항
+  - git IssueConvention
+  - git PRConvention 적용
 
 목표
 기반 기능
@@ -16,5 +19,6 @@
   - 회원 정보 조회 강화
   - 채팅
 
-추가 개발
-  - 레디스
+추가 목표
+  - 레디스 적용
+  - GitHub Action CI/CD 적용
