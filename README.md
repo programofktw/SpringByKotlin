@@ -1,12 +1,14 @@
 # SpringByKotlin
 <hr>
+
 시작 전 작용 사항
-  - git IssueConvention
-  - git PRConvention 적용
+  - git Issue Templet
+  - git PR Templet 적용
 
 목표
 기반 기능
   - 소셜 로그인
+    - OAuth2.0 신청 ( 카카오, 네이버, 구글, 깃허브 )
   - 이미지 S3
   - QueryDSL
 
