@@ -1,5 +1,6 @@
 package com.example.sideproject.infra.security.jwt
 
+import com.example.sideproject.infra.security.config.JwtProperties
 import io.jsonwebtoken.*
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
@@ -16,22 +17,13 @@ import javax.crypto.SecretKey
 
 @Component
 class JwtUtilImpl(
-
-    @Value("\${jwt.secret}")
-    val SECRET_KEY : String,
-
-    @Value("\${jwt.access-token.expiration-time}")
-    val ACCESS_TOKEN_EXPIRATION_TIME : Long,
-
-    @Value("\${jwt.refresh-token.expiration-time}")
-    val REFRESH_TOKEN_EXPIRATION_TIME : Long
-
+    val jwtProperties: JwtProperties
 
 ) : JwtUtil {
     var log : Logger = LoggerFactory.getLogger(this::class.java)
 
     private fun getSigningKey(): SecretKey{
-        val keyBytes = Decoders.BASE64.decode(SECRET_KEY)
+        val keyBytes = Decoders.BASE64.decode(jwtProperties.secret)
         return Keys.hmacShaKeyFor(keyBytes)
     }
 
@@ -41,7 +33,7 @@ class JwtUtilImpl(
         return Jwts.builder()
             .claim("userId", uuid.toString())// 클레임에 userId 추가
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRATION_TIME))
+            .setExpiration(Date(System.currentTimeMillis() + jwtProperties.accessTokenExpirationTime))
             .signWith(getSigningKey())
             .compact()
     }
@@ -56,7 +48,7 @@ class JwtUtilImpl(
         return Jwts.builder()
             .claim("userId", uuid.toString()) // 클레임에 userId 추가
             .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis()+jwtProperties.refreshTokenExpirationTime))
             .signWith(getSigningKey())
             .compact()
     }
