@@ -6,17 +6,15 @@ import java.util.*
 
 interface JwtUtil {
 
-    fun generateAccessToken(uuid: UUID, expirationMillis: Long, isSign : Boolean)
+    fun generateAccessToken(uuid: UUID) : String
 
-    fun generateRefreshToken(uuid : UUID, expirationMillis: Long)
+    fun generateRefreshToken(uuid : UUID) : String
 
-    fun getTokenFromHeader(httpServletRequest: HttpServletRequest)
+    fun getTokenFromHeader(httpServletRequest: HttpServletRequest): String
 
-    fun getUserIdFromToken(token: String?): String
+    fun getUserIdFromToken(token: String): String
 
-    fun getClaimsFromToken(token : String?) : Claims
 
-    fun validateToken(token : String)
 
     fun signCheck(token : String) :Boolean
 }
