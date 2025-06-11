@@ -1,12 +1,15 @@
 package com.example.sideproject.infra.security.jwt
 
 import io.jsonwebtoken.Claims
+import io.jsonwebtoken.io.Decoders
+import io.jsonwebtoken.security.Keys
 import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.util.*
+import javax.crypto.SecretKey
 
 @Component
 class JwtUtilImpl(
@@ -24,7 +27,10 @@ class JwtUtilImpl(
 ) : JwtUtil {
     var log : Logger = LoggerFactory.getLogger(this::class.java)
 
-
+    private fun getSigningKey(): SecretKey{
+        val keyBytes = Decoders.BASE64.decode(SECRET_KEY)
+        return Keys.hmacShaKeyFor(keyBytes)
+    }
 
     override fun generateAccessToken(uuid: UUID, expirationMillis: Long, isSign: Boolean) {
         TODO("Not yet implemented")
