@@ -1,6 +1,6 @@
 package com.example.sideproject.infra.security.jwt
 
-import io.jsonwebtoken.Claims
+
 import jakarta.servlet.http.HttpServletRequest
 import java.util.*
 
@@ -12,10 +12,9 @@ interface JwtUtil {
 
     fun getTokenFromHeader(httpServletRequest: HttpServletRequest): String
 
-    fun getUserIdFromToken(token: String): String
-
-
+    fun getUserIdFromToken(token: String, isAccess: Boolean): String
 
     fun signCheck(token : String) :Boolean
+
 }
 
